@@ -1,6 +1,6 @@
 # 🧹 XML Call Cleanup Tool
 
-A high-performance Streamlit desktop application for batch-filtering `<Call>` records from large collections of XML billing documents. Built for telecom BSS/OSS workflows, it processes thousands of files in parallel while preserving the original folder structure and producing a full audit trail of every removed record.
+A high-performance Streamlit desktop application for batch-filtering `<Call>` records from large collections of XML billing documents. Built for telecom BSS workflows, it processes thousands of files in parallel while preserving the original folder structure and producing a full audit trail of every removed record.
 
 ---
 
@@ -185,11 +185,11 @@ Use the slider to set the number of **worker processes**. Each worker is a full 
 **Recommended values by hardware:**
 
 | CPU Type | Physical Cores | Recommended Workers |
- |---|---|---|
- | Intel i7-1265U (this machine) | 10 | **10** |
- | Intel i5 / Ryzen 5 (6-core) | 6 | 6 |
- | Intel i9 / Ryzen 9 (16-core) | 16 | 14–16 |
- | Server (32+ cores) | 32 | 28–32 |
+|---|---|---|
+| Intel i7-1265U (this machine) | 10 | **10** |
+| Intel i5 / Ryzen 5 (6-core) | 6 | 6 |
+| Intel i9 / Ryzen 9 (16-core) | 16 | 14–16 |
+| Server (32+ cores) | 32 | 28–32 |
 
 Setting workers above the physical core count typically hurts performance due to context-switching overhead.
 
@@ -214,12 +214,12 @@ XML parsing in Python is **CPU-bound** work. Python's Global Interpreter Lock (G
 ### Speed optimization checklist
 
 | Action | Expected Impact |
- |---|---|
- | Install `lxml` (`pip install lxml`) | **3–5× faster** XML parsing |
- | Set workers = physical core count | Maximum CPU saturation |
- | Input and output on the same drive/filesystem | Hard-links work → zero copy overhead for clean files |
- | Input and output on fast SSD | Reduces I/O wait time |
- | Close other CPU-heavy applications | More cores available to workers |
+|---|---|
+| Install `lxml` (`pip install lxml`) | **3–5× faster** XML parsing |
+| Set workers = physical core count | Maximum CPU saturation |
+| Input and output on the same drive/filesystem | Hard-links work → zero copy overhead for clean files |
+| Input and output on fast SSD | Reduces I/O wait time |
+| Close other CPU-heavy applications | More cores available to workers |
 
 ### Processing pipeline per file
 
@@ -271,13 +271,13 @@ All files across all subfolders are submitted to the pool simultaneously. Worker
 ### Key functions
 
 | Function | Description |
- |---|---|
- | `_process_file(args)` | Core worker function. Reads file, pre-scans, parses if needed, writes output. Runs in a worker process. |
- | `_xcd_matches_lxml/stdlib(xcd)` | Pure attribute filter function. Returns `True` if the XCD element meets all removal criteria. |
- | `find_xml_files(input_dir)` | Walks the input directory tree and returns a dict of `{subfolder: [file_paths]}`. |
- | `build_tasks(...)` | Pre-computes `(file_path, output_dir)` tuples and creates all output directories upfront. |
- | `_hardlink_or_copy(src, dst)` | Attempts `os.link()` (instant, zero bytes) then falls back to `shutil.copy2()`. |
- | `main()` | Streamlit UI entry point. Renders all sections and manages the processing loop. |
+|---|---|
+| `_process_file(args)` | Core worker function. Reads file, pre-scans, parses if needed, writes output. Runs in a worker process. |
+| `_xcd_matches_lxml/stdlib(xcd)` | Pure attribute filter function. Returns `True` if the XCD element meets all removal criteria. |
+| `find_xml_files(input_dir)` | Walks the input directory tree and returns a dict of `{subfolder: [file_paths]}`. |
+| `build_tasks(...)` | Pre-computes `(file_path, output_dir)` tuples and creates all output directories upfront. |
+| `_hardlink_or_copy(src, dst)` | Attempts `os.link()` (instant, zero bytes) then falls back to `shutil.copy2()`. |
+| `main()` | Streamlit UI entry point. Renders all sections and manages the processing loop. |
 
 ### Windows compatibility
 
@@ -368,14 +368,13 @@ Run `pip install streamlit` in your active Python environment.
 ## Version History
 
 | Version | Key Changes |
- |---|---|
- | **v3** (current) | Switched to `ProcessPoolExecutor` for true GIL-free parallelism. Added regex pre-scan to skip clean files entirely. Single in-memory read passed directly to lxml. Hard-link optimization. Pre-created output dirs. IPC chunksize tuning. |
- | **v2** | Switched from sequential to `ThreadPoolExecutor`. Added lxml optional fast path. Pre-computed output paths. Eliminated per-file `makedirs`. All subfolders submitted in parallel. |
- | **v1** | Initial release. Sequential processing with basic Streamlit UI. |
+|---|---|
+| **v3** (current) | Switched to `ProcessPoolExecutor` for true GIL-free parallelism. Added regex pre-scan to skip clean files entirely. Single in-memory read passed directly to lxml. Hard-link optimization. Pre-created output dirs. IPC chunksize tuning. |
+| **v2** | Switched from sequential to `ThreadPoolExecutor`. Added lxml optional fast path. Pre-computed output paths. Eliminated per-file `makedirs`. All subfolders submitted in parallel. |
+| **v1** | Initial release. Sequential processing with basic Streamlit UI. |
 
 ---
 
 ## License
 
 Internal tool — for authorized use within your organization only.
-#  X M L _ C A L L _ C L E A N U P

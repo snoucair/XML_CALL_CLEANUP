@@ -1,5 +1,5 @@
 """
-Xml_Call_Cleanup_v3.py
+Xml_Call_Cleanup.py
 ======================
 Key architectural changes vs v2:
   1. ProcessPoolExecutor  — bypasses the GIL; all 12 logical CPUs work in
@@ -131,7 +131,7 @@ def _process_file(args: Tuple[str, str]) -> Tuple[Optional[str], int]:
             _hardlink_or_copy(file_path, out_path)
             return None, 0
 
-        # ── Step 3: full XML parse (only for candidate files) ───────────────
+        # ── Step 3: full XML parse (only for candidate files) ────────────────
         basename = os.path.basename(file_path)
         out_path = os.path.join(output_dir, basename)
         rej_path = os.path.join(output_dir, f"REJ_{basename}")
