@@ -120,14 +120,57 @@ Python **3.9 or higher** is required.
 
 ## Installation
 
-**1. Clone or download the project**
+**1. Install Python**
+
+Download and install **Python 3.9 or higher** from [python.org](https://www.python.org/downloads/).
+
+- **Windows**: Download the installer and run it. Make sure to check ✓ **"Add Python to PATH"** during installation.
+- **Linux**: Install via your package manager (e.g., `apt install python3.9` on Ubuntu/Debian)
+- **macOS**: Install via Homebrew (`brew install python3`) or download from python.org
+
+Verify installation:
+```bash
+python --version
+```
+
+**2. Clone or download the project**
 
 ```bash
 git clone https://github.com/your-org/xml-call-cleanup.git
 cd xml-call-cleanup
 ```
 
-**2. Create a virtual environment (recommended)**
+**3. Create folder structure for input/output**
+
+Create the following directories relative to the project root:
+
+```
+xml-call-cleanup/
+├── Input/          (place your XML files here, in subfolders matching your structure)
+└── Output/         (processed XML files will be written here)
+```
+
+You can create these folders manually:
+
+- **Windows (Command Prompt):**
+  ```bash
+  mkdir Input Output
+  ```
+
+- **Windows (PowerShell):**
+  ```powershell
+  New-Item -ItemType Directory -Name Input
+  New-Item -ItemType Directory -Name Output
+  ```
+
+- **Linux / macOS:**
+  ```bash
+  mkdir -p Input Output
+  ```
+
+> **Note:** The app requires both the Input and Output parent folders to exist. The Input folder should contain your XML files organized in subfolders. The Output folder will receive the processed results in the same subfolder structure.
+
+**4. Create a virtual environment (recommended)**
 
 ```bash
 python -m venv venv
@@ -139,7 +182,7 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-**3. Install dependencies**
+**5. Install dependencies**
 
 ```bash
 pip install streamlit lxml
