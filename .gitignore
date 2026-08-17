@@ -25,4 +25,7 @@ desktop.ini
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp
+
+# Test data
+XML_2026_07/

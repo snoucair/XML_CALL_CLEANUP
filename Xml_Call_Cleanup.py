@@ -169,7 +169,7 @@ def _process_file(args: Tuple[str, str]) -> Tuple[Optional[str], int]:
                         _XML_HEADER_STR
                         + '<Document>\n'
                         + '\n'.join(filtered_lines)
-                        + '\n</Document>'
+                        + '\n</Document>\n'
                     ).encode('utf-8')
                     with open(rej_path, 'wb') as fh:
                         fh.write(rej_bytes)
@@ -179,6 +179,7 @@ def _process_file(args: Tuple[str, str]) -> Tuple[Optional[str], int]:
                     fh.write(_XML_HEADER_BYTES)
                     fh.write(lxml_etree.tostring(root, encoding='utf-8',
                                                   xml_declaration=False))
+                    fh.write(b'\n')
                 return file_path, filtered_count
             else:
                 _hardlink_or_copy(file_path, out_path)
@@ -212,7 +213,7 @@ def _process_file(args: Tuple[str, str]) -> Tuple[Optional[str], int]:
                         _XML_HEADER_STR
                         + '<Document>\n'
                         + '\n'.join(filtered_lines)
-                        + '\n</Document>'
+                        + '\n</Document>\n'
                     )
                     with open(rej_path, 'w', encoding='utf-8') as fh:
                         fh.write(rej_content)
@@ -220,6 +221,7 @@ def _process_file(args: Tuple[str, str]) -> Tuple[Optional[str], int]:
                 with open(out_path, 'wb') as fh:
                     fh.write(_XML_HEADER_BYTES)
                     tree.write(fh, encoding='utf-8', xml_declaration=False)
+                    fh.write(b'\n')
                 return file_path, filtered_count
             else:
                 _hardlink_or_copy(file_path, out_path)
